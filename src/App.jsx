@@ -61,12 +61,15 @@ function AppInner() {
             <div className="topbar">
               <div>
                 <div className="h1">
-                  Overzicht
-                  <select className="mswitch" value={activeKey} onChange={(e) => setMonthKey(e.target.value)}>
-                    {[...keys].reverse().map((k) => (
-                      <option key={k} value={k}>{maandTitel(k)}</option>
-                    ))}
-                  </select>
+                  <span className="h1word">Overzicht</span>
+                  <span className="monthpick">
+                    <span className="calic">📅</span>
+                    <select className="mswitch" value={activeKey} onChange={(e) => setMonthKey(e.target.value)}>
+                      {[...keys].reverse().map((k) => (
+                        <option key={k} value={k}>{maandTitel(k)}</option>
+                      ))}
+                    </select>
+                  </span>
                 </div>
                 <div className="sub">{subtitleFor(totals.over)}</div>
               </div>

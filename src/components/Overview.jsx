@@ -1,28 +1,21 @@
 import { useState } from 'react';
-import { useStore, monthKeysSorted, monthTotals } from '../lib/store.jsx';
+import { useStore, monthTotals } from '../lib/store.jsx';
 import { KNOWN_INCOME, KNOWN_EXPENSE } from '../lib/categories.js';
-import { euro, euroSigned, maandKort } from '../lib/format.js';
+import { euro, euroSigned } from '../lib/format.js';
 import EditableRow from './EditableRow.jsx';
 
 export default function Overview({ monthKey }) {
   const { data, addEntry } = useStore();
   const [focusId, setFocusId] = useState(null);
-  const keys = monthKeysSorted(data);
   const month = data.months[monthKey] || { income: [], expense: [], year: +monthKey.slice(0, 4) };
   const { totalIn, totalOut, over } = monthTotals(month);
 
-  // Trend: tot 12 maanden eindigend bij de geselecteerde maand
-  const idx = keys.indexOf(monthKey);
-  const window = keys.slice(Math.max(0, idx - 11), idx + 1);
-  const trend = window.map((k) => ({ key: k, month: data.months[k].month, over: monthTotals(data.months[k]).over }));
-  const maxAbs = Math.max(1, ...trend.map((t) => Math.abs(t.over)));
-  const overValues = trend.map((t) => t.over);
-  const avg = overValues.length ? Math.round(overValues.reduce((a, b) => a + b, 0) / overValues.length) : 0;
-  const best = overValues.length ? Math.max(...overValues) : 0;
-
   const positive = over >= 0;
-  const inWidth = Math.max(totalIn, totalOut) === 0 ? 0 : Math.round((totalIn / Math.max(totalIn, totalOut)) * 100);
-  const utWidth = Math.max(totalIn, totalOut) === 0 ? 0 : Math.round((totalOut / Math.max(totalIn, totalOut)) * 100);
+  // Pie-vulling op de groepskoppen (Things-stijl):
+  //  Inkomsten = vol als de maand uit kan (over >= 0), anders dekkingsgraad
+  //  Uitgaven = % van je inkomsten dat je deze maand uitgeeft
+  const incomePie = totalOut === 0 ? 100 : (over >= 0 ? 100 : Math.round((totalIn / totalOut) * 100));
+  const expensePie = totalIn === 0 ? 100 : Math.min(100, Math.round((totalOut / totalIn) * 100));
 
   function add(type) {
     const id = addEntry(monthKey, type);
@@ -68,31 +61,14 @@ export default function Overview({ monthKey }) {
         </div>
       </div>
 
-      {/* TREND */}
-      <div className="tile span2">
-        <div className="tt">📈 Verloop ‘Over’ · laatste {trend.length} maanden</div>
-        <div className="chart">
-          {trend.map((t) => {
-            const h = Math.max(6, Math.round((Math.abs(t.over) / maxAbs) * 100));
-            const cls = 'cbar' + (t.over < 0 ? ' neg' : '') + (t.key === monthKey ? ' cur' : '');
-            return (
-              <div className="ccol" key={t.key} title={euroSigned(t.over)}>
-                <div className={cls} style={{ height: h + '%' }} />
-                <div className="cmo">{maandKort(t.month)}</div>
-              </div>
-            );
-          })}
-        </div>
-        <div className="chcap">
-          <span>Gemiddeld <b className="g">{euroSigned(avg)}</b> over per maand</span>
-          <span>Beste maand <b className="g">{euroSigned(best)}</b></span>
-        </div>
-      </div>
-
       {/* INKOMSTEN */}
       <div className="tile">
         <div className="lhead">
-          <div className="tt">💚 Inkomsten</div>
+          <div className="ghead">
+            <span className="gpie gin" style={{ '--p': incomePie + '%' }} aria-hidden="true"></span>
+            <span className="gemoji">💚</span>
+            <span className="tt">Inkomsten</span>
+          </div>
           <span className="pill g">{euroSigned(totalIn)}</span>
         </div>
         {renderRows('income', month.income)}
@@ -101,7 +77,11 @@ export default function Overview({ monthKey }) {
       {/* UITGAVEN */}
       <div className="tile">
         <div className="lhead">
-          <div className="tt">🔥 Uitgaven</div>
+          <div className="ghead">
+            <span className="gpie gut" style={{ '--p': expensePie + '%' }} aria-hidden="true"></span>
+            <span className="gemoji">🔥</span>
+            <span className="tt">Uitgaven</span>
+          </div>
           <span className="pill r">{euroSigned(-totalOut)}</span>
         </div>
         {renderRows('expense', month.expense)}
@@ -109,6 +89,9 @@ export default function Overview({ monthKey }) {
 
       <datalist id="cats-in">{KNOWN_INCOME.map((c) => <option key={c} value={c} />)}</datalist>
       <datalist id="cats-out">{KNOWN_EXPENSE.map((c) => <option key={c} value={c} />)}</datalist>
+
+      {/* Magic-＋ (zwevend, Things-stijl) */}
+      <button className="magicfab" onClick={() => add('expense')} aria-label="Nieuwe boeking">＋</button>
     </div>
   );
 }

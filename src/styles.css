@@ -392,6 +392,43 @@ input, select { font-family: inherit; }
 }
 [data-theme="things"] .erow.expense .cellamt .cell-in { color: var(--text); }
 
+/* Groepskoppen: emoji (Notion/Bold) of pie-voortgangscirkel (Things) */
+.ghead { display: flex; align-items: center; gap: 8px; }
+.gemoji { font-size: 14px; }
+.gpie { display: none; }
+[data-theme="things"] .gemoji { display: none; }
+[data-theme="things"] .gpie {
+  display: inline-block; width: 15px; height: 15px; border-radius: 50%; flex-shrink: 0;
+  background: conic-gradient(var(--pc) var(--p, 0%), var(--pcbg) 0);
+}
+[data-theme="things"] .gpie.gin { --pc: var(--income); --pcbg: color-mix(in srgb, var(--income) 22%, transparent); }
+[data-theme="things"] .gpie.gut { --pc: var(--expense); --pcbg: color-mix(in srgb, var(--expense) 22%, transparent); }
+
+/* Titel: 'Overzicht' + maand-pill (Notion/Bold) of maand-als-titel (Things) */
+.monthpick { display: inline-flex; align-items: center; gap: 6px; }
+.calic { display: none; }
+[data-theme="things"] .h1word { display: none; }
+[data-theme="things"] .calic { display: inline; font-size: 22px; }
+[data-theme="things"] .mswitch {
+  font-size: 26px; font-weight: 700; letter-spacing: -.5px; color: var(--text);
+  background-color: transparent; padding: 0 28px 2px 0; border-radius: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23b6b6bc' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-position: right 2px center;
+}
+
+/* Magic-＋ (zwevend) — alleen Things */
+.magicfab { display: none; }
+[data-theme="things"] .magicfab {
+  display: flex; align-items: center; justify-content: center;
+  position: fixed; right: 28px; bottom: 26px; z-index: 30;
+  width: 54px; height: 54px; border-radius: 50%; font-size: 30px; font-weight: 300; line-height: 1; color: #fff;
+  background: var(--accent); box-shadow: 0 9px 22px -4px rgba(45,125,246,.5);
+}
+[data-theme="things"] .magicfab:active { transform: scale(0.96); }
+@media (max-width: 720px) {
+  [data-theme="things"] .magicfab { bottom: 84px; right: 18px; }
+}
+
 /* ── Stat-kaarten (Historie / Analytics) ───────────────────── */
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 14px; margin-bottom: 18px; }
 .stat { background: var(--surface); border: var(--card-border); border-radius: var(--radius); box-shadow: var(--card-shadow); padding: 16px 17px; }

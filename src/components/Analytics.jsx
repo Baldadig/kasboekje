@@ -30,6 +30,7 @@ export default function Analytics() {
   const a = averages(data);
   const months = monthSummaries(data).slice(-12);
   const maxBar = Math.max(1, ...months.map((m) => Math.max(m.totalIn, m.totalOut)));
+  const maxOverAbs = Math.max(1, ...months.map((m) => Math.abs(m.over)));
 
   const expense = categoryTotals(data, 'expense').slice(0, 8);
   const income = categoryTotals(data, 'income').slice(0, 6);
@@ -46,6 +47,25 @@ export default function Analytics() {
       </div>
 
       <div className="grid">
+        <div className="tile span2">
+          <div className="tt" style={{ marginBottom: 4 }}>📈 Verloop ‘Over’ · laatste {months.length} maanden</div>
+          <div className="chart">
+            {months.map((m) => {
+              const h = Math.max(6, Math.round((Math.abs(m.over) / maxOverAbs) * 100));
+              return (
+                <div className="ccol" key={m.key} title={euroSigned(m.over)}>
+                  <div className={'cbar' + (m.over < 0 ? ' neg' : '')} style={{ height: h + '%' }} />
+                  <div className="cmo">{maandKort(m.month)}</div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="chcap">
+            <span>Gemiddeld <b className="g">{euroSigned(a.avgOver)}</b> over per maand</span>
+            <span>Beste maand <b className="g">{euroSigned(Math.max(...months.map((m) => m.over)))}</b></span>
+          </div>
+        </div>
+
         <div className="tile span2">
           <div className="lhead">
             <div className="tt">📊 Inkomsten vs uitgaven · laatste {months.length} maanden</div>
