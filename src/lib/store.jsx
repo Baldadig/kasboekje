@@ -1,6 +1,11 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import seed from '../data/seed.json';
 import { uid } from './format.js';
+import { DEFAULT_ONDERWERPEN } from './categories.js';
+
+function seedOnderwerpen() {
+  return DEFAULT_ONDERWERPEN.map((o) => ({ id: uid(), ...o }));
+}
 
 // ───────────────────────────────────────────────────────────────────────────
 // Data-store voor het kasboekje.
@@ -38,13 +43,18 @@ function buildInitial() {
     investments: seed.investments || [],
     investmentsKid: seed.investmentsKid || [],
     kidLabel: seed.kidLabel || 'Spaarpot kind',
+    categories: seedOnderwerpen(),
   };
 }
 
 function load() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const d = JSON.parse(raw);
+      if (!d.categories) d.categories = seedOnderwerpen();
+      return d;
+    }
   } catch {
     /* val terug op seed */
   }
@@ -108,6 +118,23 @@ export function StoreProvider({ children }) {
           m[type] = m[type].filter((e) => e.id !== id);
           return m;
         });
+      },
+      addCategory(type) {
+        const id = uid();
+        setData((d) => ({
+          ...d,
+          categories: [...(d.categories || []), { id, name: '', emoji: '🏷️', color: '#6d5ef0', type, amount: 0, recurring: false }],
+        }));
+        return id;
+      },
+      updateCategory(id, patch) {
+        setData((d) => ({
+          ...d,
+          categories: (d.categories || []).map((c) => (c.id === id ? { ...c, ...patch } : c)),
+        }));
+      },
+      deleteCategory(id) {
+        setData((d) => ({ ...d, categories: (d.categories || []).filter((c) => c.id !== id) }));
       },
       resetToSeed() {
         const fresh = buildInitial();

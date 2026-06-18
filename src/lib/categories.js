@@ -51,3 +51,35 @@ export const KNOWN_EXPENSE = [
   'Huur', 'Boodschappen', 'Uit eten', 'Sportschool', 'Zorgverzekering',
   'Abonnementen', 'Sparen', 'Beleggen', 'Pensioen', 'Vakantie',
 ];
+
+// Kleurenpalet voor onderwerpen
+export const PALETTE = [
+  '#6d5ef0', '#1d9e75', '#7cb342', '#4a8bf5', '#2c4f9e',
+  '#e24b4a', '#ef9f27', '#8a8a8e', '#d4537e', '#16a89a',
+];
+
+// Standaard-onderwerpen (categorieën): naam, emoji, kleur, type,
+// vast maandbedrag en of ze elke maand terugkomen (vaste last).
+export const DEFAULT_ONDERWERPEN = [
+  { name: 'Salaris', emoji: '💼', color: '#6d5ef0', type: 'income', amount: 3200, recurring: true },
+  { name: 'Freelance', emoji: '🤝', color: '#1d9e75', type: 'income', amount: 0, recurring: false },
+  { name: 'Bonus', emoji: '🎁', color: '#d4537e', type: 'income', amount: 0, recurring: false },
+  { name: 'Huur', emoji: '🏠', color: '#6d5ef0', type: 'expense', amount: 1250, recurring: true },
+  { name: 'Boodschappen', emoji: '🛒', color: '#7cb342', type: 'expense', amount: 480, recurring: true },
+  { name: 'Sportschool', emoji: '🏋️', color: '#ef9f27', type: 'expense', amount: 35, recurring: true },
+  { name: 'Zorgverzekering', emoji: '🏥', color: '#e24b4a', type: 'expense', amount: 140, recurring: true },
+  { name: 'Abonnementen', emoji: '📺', color: '#8b5cf6', type: 'expense', amount: 45, recurring: true },
+  { name: 'Uit eten', emoji: '🍽️', color: '#ef9f27', type: 'expense', amount: 0, recurring: false },
+  { name: 'Sparen', emoji: '🐷', color: '#4a8bf5', type: 'expense', amount: 400, recurring: true },
+  { name: 'Beleggen', emoji: '📈', color: '#1d9e75', type: 'expense', amount: 200, recurring: true },
+  { name: 'Vakantie', emoji: '🏖️', color: '#ef9f27', type: 'expense', amount: 0, recurring: false },
+];
+
+// Stijl (emoji + kleur) voor een categorie-naam: eerst uit de onderwerpen,
+// anders de ingebouwde fallback.
+export function resolveCat(categories, name) {
+  const n = (name || '').trim().toLowerCase();
+  const o = (categories || []).find((c) => (c.name || '').toLowerCase() === n);
+  if (o) return { emoji: o.emoji || '💸', hex: o.color || '#888780' };
+  return catMeta(name);
+}

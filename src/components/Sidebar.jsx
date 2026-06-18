@@ -4,6 +4,7 @@ const TABS = [
   { id: 'overzicht', icon: '🏠', label: 'Overzicht' },
   { id: 'historie', icon: '📜', label: 'Historie' },
   { id: 'analytics', icon: '📊', label: 'Analytics' },
+  { id: 'onderwerpen', icon: '🏷️', label: 'Onderwerpen' },
 ];
 
 export default function Sidebar({ active, onNavigate }) {

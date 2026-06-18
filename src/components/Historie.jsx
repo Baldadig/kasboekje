@@ -1,10 +1,10 @@
 import { useStore, monthKeysSorted, monthTotals } from '../lib/store.jsx';
 import { averages } from '../lib/analytics.js';
-import { catMeta, softTint } from '../lib/categories.js';
+import { resolveCat, softTint } from '../lib/categories.js';
 import { euro, euroSigned, maandLabel } from '../lib/format.js';
 
-function Row({ e, type }) {
-  const meta = catMeta(e.cat || '');
+function Row({ e, type, cats }) {
+  const meta = resolveCat(cats, e.cat);
   return (
     <div className="qrow">
       <span className="qem" style={{ background: softTint(meta.hex) }}>{meta.emoji}</span>
@@ -14,7 +14,7 @@ function Row({ e, type }) {
   );
 }
 
-function MonthBlock({ m, onOpen }) {
+function MonthBlock({ m, onOpen, cats }) {
   const { totalIn, totalOut, over } = monthTotals(m);
   const cap = maandLabel(m.month);
   return (
@@ -26,11 +26,11 @@ function MonthBlock({ m, onOpen }) {
 
       <div className="qsub"><span className="qdot g" /><span>Inkomsten</span><span className="qt">{euro(totalIn)}</span></div>
       {m.income.length === 0 && <div className="qempty">—</div>}
-      {m.income.map((e) => <Row key={e.id} e={e} type="income" />)}
+      {m.income.map((e) => <Row key={e.id} e={e} type="income" cats={cats} />)}
 
       <div className="qsub"><span className="qdot r" /><span>Uitgaven</span><span className="qt">{euro(totalOut)}</span></div>
       {m.expense.length === 0 && <div className="qempty">—</div>}
-      {m.expense.map((e) => <Row key={e.id} e={e} type="expense" />)}
+      {m.expense.map((e) => <Row key={e.id} e={e} type="expense" cats={cats} />)}
 
       <div className="qover">
         <span className="ql">💰 Over</span>
@@ -66,7 +66,7 @@ export default function Historie({ onOpenMonth }) {
       </div>
 
       <div className="kwartaal">
-        {keys.map((k) => <MonthBlock key={k} m={data.months[k]} onOpen={onOpenMonth} />)}
+        {keys.map((k) => <MonthBlock key={k} m={data.months[k]} onOpen={onOpenMonth} cats={data.categories} />)}
       </div>
     </div>
   );

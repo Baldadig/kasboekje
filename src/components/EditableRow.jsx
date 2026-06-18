@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useStore } from '../lib/store.jsx';
-import { catMeta, softTint } from '../lib/categories.js';
+import { resolveCat, softTint } from '../lib/categories.js';
 
 // Eén inline-bewerkbare regel: categorie + bedrag, direct typen zoals in Excel.
 export default function EditableRow({ monthKey, type, entry, listId, autoFocus }) {
-  const { updateEntry, deleteEntry } = useStore();
+  const { data, updateEntry, deleteEntry } = useStore();
   const [cat, setCat] = useState(entry.cat);
   const [amt, setAmt] = useState(entry.amt ? String(entry.amt) : '');
-  const meta = catMeta(cat || '');
+  const meta = resolveCat(data.categories, cat);
 
   function commitCat() {
     const v = cat.trim();

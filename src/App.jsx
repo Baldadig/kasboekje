@@ -5,10 +5,12 @@ import Sidebar from './components/Sidebar.jsx';
 import Overview from './components/Overview.jsx';
 import Historie from './components/Historie.jsx';
 import Analytics from './components/Analytics.jsx';
+import Onderwerpen from './components/Onderwerpen.jsx';
 
 const TAB_TITLES = {
   historie: { icon: '📜', label: 'Historie' },
   analytics: { icon: '📊', label: 'Analytics' },
+  onderwerpen: { icon: '🏷️', label: 'Onderwerpen' },
 };
 
 function subtitleFor(over) {
@@ -85,6 +87,7 @@ function AppInner() {
             </div>
             {tab === 'historie' && <Historie onOpenMonth={openMonth} />}
             {tab === 'analytics' && <Analytics />}
+            {tab === 'onderwerpen' && <Onderwerpen />}
           </>
         )}
       </main>

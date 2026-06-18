@@ -1,13 +1,14 @@
 import { useStore } from '../lib/store.jsx';
 import { monthSummaries, averages, categoryTotals } from '../lib/analytics.js';
-import { catMeta, softTint } from '../lib/categories.js';
+import { resolveCat, softTint } from '../lib/categories.js';
 import { euro, euroSigned, maandKort } from '../lib/format.js';
 
 function CatBars({ rows, max }) {
+  const { data } = useStore();
   return (
     <div className="clist">
       {rows.map((r) => {
-        const meta = catMeta(r.cat);
+        const meta = resolveCat(data.categories, r.cat);
         return (
           <div className="crow" key={r.cat}>
             <span className="lem" style={{ background: softTint(meta.hex) }}>{meta.emoji}</span>
