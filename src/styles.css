@@ -127,8 +127,8 @@ input, select { font-family: inherit; }
   --expense-on: #b23c2a;
   --radius: 12px;
   --radius-sm: 9px;
-  --card-border: none;
-  --card-shadow: 0 1px 2px rgba(20,28,48,.07), 0 6px 16px rgba(20,28,48,.05);
+  --card-border: 1px solid var(--line);
+  --card-shadow: none;
   --hero-bg: linear-gradient(180deg, #f1f7ff, #ffffff);
   --hero-border: none;
   --hero-text: var(--text);
@@ -219,8 +219,8 @@ input, select { font-family: inherit; }
     --expense: #f0775f;
     --expense-bg: #3a1f1a;
     --expense-on: #ffa48f;
-    --card-border: none;
-    --card-shadow: 0 1px 2px rgba(0,0,0,.35), 0 6px 18px rgba(0,0,0,.28);
+    --card-border: 1px solid var(--line);
+    --card-shadow: none;
     --hero-bg: linear-gradient(180deg, #2b323d, #282d35);
     --btn-bg: #4a9dec;
     --btn-text: #06121f;
@@ -379,18 +379,35 @@ input, select { font-family: inherit; }
 .stat .sv.g { color: var(--income); }
 .stat .sv.r { color: var(--expense); }
 
-/* ── Historie ──────────────────────────────────────────────── */
-.hlist { display: flex; flex-direction: column; gap: 10px; }
-.hrow { display: grid; grid-template-columns: 1fr auto auto auto; align-items: center; gap: 16px; width: 100%; text-align: left; background: var(--surface); border: var(--card-border); box-shadow: var(--card-shadow); border-radius: var(--radius); padding: 13px 16px; transition: transform .1s; }
-.hrow:hover { border-color: var(--accent); }
-[data-theme="brutalist"] .hrow:hover { transform: translate(-1px,-1px); }
-.hm-name { font-size: 15px; font-weight: var(--bold); color: var(--text); }
-.hsub { font-size: 12px; color: var(--text-2); font-weight: 500; margin-top: 2px; }
-.hnums { display: flex; gap: 14px; }
-.hn { font-size: 13.5px; font-weight: var(--bold); }
-.hn.g { color: var(--income); }
-.hn.r { color: var(--expense); }
-.hchev { font-size: 20px; color: var(--muted); font-weight: var(--bold); }
+/* ── Historie — 3-maanden / jaar-raster (zoals het Excel-kasboekje) ── */
+.kwartaal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.qblock { text-align: left; width: 100%; background: var(--surface); border: var(--card-border); box-shadow: var(--card-shadow); border-radius: var(--radius); padding: 13px 15px; color: var(--text); cursor: pointer; transition: transform .1s, border-color .12s; }
+.qblock:hover { border-color: var(--accent); }
+[data-theme="brutalist"] .qblock:hover { transform: translate(-1px,-1px); }
+.qmh { display: flex; align-items: baseline; gap: 6px; padding-bottom: 6px; margin-bottom: 6px; border-bottom: 1.5px solid var(--line-strong); }
+.qmn { font-size: 15.5px; font-weight: 700; color: var(--text); letter-spacing: -.2px; }
+.qyr { font-size: 11px; font-weight: 500; color: var(--muted); }
+.qsub { display: flex; align-items: center; gap: 6px; margin: 9px 0 3px; font-size: 11px; font-weight: var(--bold); color: var(--text-2); }
+.qsub .qdot { width: 8px; height: 8px; border-radius: 3px; }
+.qsub .qdot.g { background: var(--income); }
+.qsub .qdot.r { background: var(--expense); }
+.qsub .qt { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; }
+.qrow { display: flex; align-items: center; gap: 7px; padding: 3px 0; border-top: 1px solid var(--line); }
+.qsub + .qrow { border-top: none; }
+.qem { width: 21px; height: 21px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; }
+[data-theme="brutalist"] .qem { border: 1.5px solid #000; border-radius: 5px; }
+.qnm { flex: 1; font-size: 12px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.qam { font-size: 12px; font-weight: var(--bold); color: var(--text); font-variant-numeric: tabular-nums; flex-shrink: 0; }
+.qam.g { color: var(--income); }
+.qempty { font-size: 11px; color: var(--muted); padding: 2px 0; }
+.qover { display: flex; justify-content: space-between; align-items: center; margin-top: 9px; padding: 8px 10px; border-radius: var(--radius-sm); background: var(--surface-2); }
+[data-theme="brutalist"] .qover { border: 2px solid #000; }
+.qover .ql { font-size: 12px; font-weight: var(--bold); color: var(--text-2); }
+.qover .qv { font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -.3px; }
+.qover .qv.pos { color: var(--income); }
+.qover .qv.neg { color: var(--expense); }
+@media (max-width: 1040px) { .kwartaal { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px) { .kwartaal { grid-template-columns: 1fr; } }
 
 /* ── Analytics ─────────────────────────────────────────────── */
 .legend { display: flex; gap: 14px; font-size: 12.5px; font-weight: var(--bold); color: var(--text-2); }
