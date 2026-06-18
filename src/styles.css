@@ -107,7 +107,7 @@ input, select { font-family: inherit; }
 [data-theme="things"] {
   --font: 'Inter', -apple-system, system-ui, sans-serif;
   --bold: 600;
-  --bg: #f5f6f8;
+  --bg: #ffffff;
   --surface: #ffffff;
   --surface-2: #eef0f3;
   --sidebar-bg: #ecedf0;
@@ -368,8 +368,29 @@ input, select { font-family: inherit; }
 .addrow { display: flex; align-items: center; gap: 8px; width: 100%; padding: 9px 9px; margin-top: 4px; border-radius: var(--radius-sm); border: 1.5px dashed var(--line-strong); color: var(--text-2); font-size: 13.5px; font-weight: var(--bold); transition: background .12s, color .12s, border-color .12s; }
 .addrow:hover { background: var(--surface-2); color: var(--text); border-color: var(--accent); }
 .addrow .plus { font-size: 16px; }
-[data-theme="things"] .addrow { color: var(--accent); border-style: solid; }
-[data-theme="things"] .lem { box-shadow: 0 1px 2px rgba(20,28,48,.08); }
+[data-theme="things"] .addrow { color: var(--accent); border-style: solid; margin-top: 8px; }
+
+/* THINGS 3 — getrouwe platte lijst-look (zoals het afgestemde concept) */
+[data-theme="things"] .nav.on { background: #d9e1ee; color: #16213a; }
+[data-theme="things"] .grid { grid-template-columns: 1fr; gap: 2px; }
+[data-theme="things"] .tile { background: transparent; border: none; box-shadow: none; padding: 10px 2px; }
+[data-theme="things"] .tile.hero { padding-top: 0; }
+[data-theme="things"] .hero .hcol-r { display: none; }
+[data-theme="things"] .hero .htt { color: var(--text-2); font-weight: 500; }
+[data-theme="things"] .hero .big { color: var(--income); font-size: 36px; }
+[data-theme="things"] .hero .big.neg { color: var(--expense); }
+[data-theme="things"] .hero .hsub { color: var(--text-2); }
+[data-theme="things"] .lhead { border-bottom: 1px solid var(--line); padding-bottom: 8px; margin-bottom: 3px; }
+[data-theme="things"] .lhead .tt { font-size: 15px; color: var(--text); font-weight: 600; }
+[data-theme="things"] .pill { background: transparent; padding: 0; color: var(--text-2); font-weight: 600; }
+[data-theme="things"] .erow { padding: 7px 2px; }
+[data-theme="things"] .erow + .erow { border-top: 1px solid var(--line); }
+[data-theme="things"] .lem {
+  width: 26px; height: 26px; border-radius: 6px; font-size: 14px; box-shadow: none;
+  background: color-mix(in srgb, var(--cat, #8a8a8e) 12%, transparent) !important;
+  border: 1.5px solid color-mix(in srgb, var(--cat, #8a8a8e) 42%, transparent);
+}
+[data-theme="things"] .erow.expense .cellamt .cell-in { color: var(--text); }
 
 /* ── Stat-kaarten (Historie / Analytics) ───────────────────── */
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 14px; margin-bottom: 18px; }

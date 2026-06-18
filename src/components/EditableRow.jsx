@@ -22,7 +22,7 @@ export default function EditableRow({ monthKey, type, entry, listId, autoFocus }
 
   return (
     <div className={'erow ' + type}>
-      <span className="lem" style={{ background: softTint(meta.hex) }}>{meta.emoji}</span>
+      <span className="lem" style={{ '--cat': meta.hex, background: softTint(meta.hex) }}>{meta.emoji}</span>
       <div className="cellcat">
         <input
           className="cell-in"
