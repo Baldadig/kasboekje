@@ -485,6 +485,26 @@ input, select { font-family: inherit; }
 .odel:hover { background: var(--expense-bg); }
 .osave { margin-left: auto; font-size: 13px; font-weight: var(--bold); color: #fff; background: var(--accent); border-radius: var(--radius-sm); padding: 8px 17px; }
 
+/* ── Auto-vullen (volgende maand + vaste lasten) ───────────── */
+.addmonth {
+  width: 30px; height: 30px; border-radius: var(--radius-sm); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 500; color: var(--accent-text); background: var(--accent-soft);
+}
+.addmonth:active { transform: scale(0.94); }
+[data-theme="brutalist"] .addmonth { border: 2px solid #000; box-shadow: 2px 2px 0 #000; border-radius: 6px; }
+[data-theme="things"] .addmonth { font-size: 21px; color: var(--accent); }
+
+.fillbtn {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; text-align: left;
+  background: var(--accent-soft); border: var(--card-border); border-radius: var(--radius);
+  padding: 13px 16px; color: var(--accent-text); cursor: pointer; transition: filter .1s;
+}
+.fillbtn:hover { filter: brightness(0.98); }
+[data-theme="brutalist"] .fillbtn { border: 3px solid #000; box-shadow: 4px 4px 0 #000; }
+.fillbtn .fillmain { font-size: 15px; font-weight: var(--bold); }
+.fillbtn .fillsub { font-size: 12.5px; font-weight: 500; opacity: .82; }
+
 /* ── Stat-kaarten (Historie / Analytics) ───────────────────── */
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(155px, 1fr)); gap: 14px; margin-bottom: 18px; }
 .stat { background: var(--surface); border: var(--card-border); border-radius: var(--radius); box-shadow: var(--card-shadow); padding: 16px 17px; }

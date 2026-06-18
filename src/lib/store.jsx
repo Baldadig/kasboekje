@@ -69,6 +69,30 @@ function save(data) {
   }
 }
 
+// Vult een maand aan met de terugkerende onderwerpen (vaste lasten) die er nog
+// niet in staan, met hun vaste maandbedrag. Maakt de maand aan als die ontbreekt.
+function fillRecurringInto(d, key) {
+  const recurring = (d.categories || []).filter((c) => c.recurring && c.name && c.name.trim());
+  const cur = d.months[key] || { key, year: +key.slice(0, 4), month: +key.slice(5, 7), income: [], expense: [] };
+  const income = [...cur.income];
+  const expense = [...cur.expense];
+  for (const c of recurring) {
+    const list = c.type === 'income' ? income : expense;
+    if (!list.some((e) => (e.cat || '').toLowerCase() === c.name.toLowerCase())) {
+      list.push({ id: uid(), cat: c.name, amt: Math.round(c.amount || 0) });
+    }
+  }
+  return { ...d, months: { ...d.months, [key]: { ...cur, income, expense } } };
+}
+
+// "2026-06" -> "2026-07"
+export function nextMonthKey(key) {
+  let [y, m] = key.split('-').map(Number);
+  m += 1;
+  if (m > 12) { m = 1; y += 1; }
+  return y + '-' + String(m).padStart(2, '0');
+}
+
 const StoreContext = createContext(null);
 
 export function StoreProvider({ children }) {
@@ -135,6 +159,9 @@ export function StoreProvider({ children }) {
       },
       deleteCategory(id) {
         setData((d) => ({ ...d, categories: (d.categories || []).filter((c) => c.id !== id) }));
+      },
+      fillRecurring(key) {
+        setData((d) => fillRecurringInto(d, key));
       },
       resetToSeed() {
         const fresh = buildInitial();

@@ -3,6 +3,11 @@
 Alle noemenswaardige wijzigingen aan Kasboekje. Nieuwste versie bovenaan.
 Versies volgen semver (vMAJOR.MINOR.PATCH).
 
+## v0.0.4 — Auto-gevulde maanden (fundament-steen 2)
+- **＋-knop** bij de maandkiezer: maakt de volgende maand aan, automatisch gevuld met je terugkerende vaste lasten (met hun vaste bedrag)
+- **"Vul vaste lasten aan"**-knop verschijnt zodra een maand terugkerende onderwerpen mist, en zet ze in één klik terug
+- Je hoeft alleen nog de variabele posten aan te passen — basis voor de prognose
+
 ## v0.0.3 — Onderwerpen-beheer (fundament-steen 1)
 - Nieuw **🏷️ Onderwerpen**-tabblad: vaste categorieën met emoji, **kleur**, **vast maandbedrag** en een **terugkerend**-schakelaar
 - Inline bewerken, nieuw onderwerp toevoegen, verwijderen

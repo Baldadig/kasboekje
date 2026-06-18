@@ -5,10 +5,16 @@ import { euro, euroSigned } from '../lib/format.js';
 import EditableRow from './EditableRow.jsx';
 
 export default function Overview({ monthKey }) {
-  const { data, addEntry } = useStore();
+  const { data, addEntry, fillRecurring } = useStore();
   const [focusId, setFocusId] = useState(null);
   const month = data.months[monthKey] || { income: [], expense: [], year: +monthKey.slice(0, 4) };
   const { totalIn, totalOut, over } = monthTotals(month);
+
+  // Terugkerende onderwerpen (vaste lasten) die nog niet in deze maand staan
+  const present = new Set([...month.income, ...month.expense].map((e) => (e.cat || '').toLowerCase()));
+  const missing = (data.categories || []).filter(
+    (c) => c.recurring && c.name && c.name.trim() && !present.has(c.name.toLowerCase())
+  );
 
   const positive = over >= 0;
   // Pie-vulling op de groepskoppen (Things-stijl):
@@ -60,6 +66,14 @@ export default function Overview({ monthKey }) {
           </div>
         </div>
       </div>
+
+      {/* AUTO-VULLEN vaste lasten */}
+      {missing.length > 0 && (
+        <button className="fillbtn span2" onClick={() => fillRecurring(monthKey)}>
+          <span className="fillmain">🔁 Vul {missing.length} vaste {missing.length === 1 ? 'last' : 'lasten'} aan</span>
+          <span className="fillsub">{missing.map((c) => `${c.emoji} ${c.name}`).join('  ·  ')}</span>
+        </button>
+      )}
 
       {/* INKOMSTEN */}
       <div className="tile">

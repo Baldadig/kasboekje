@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StoreProvider, useStore, monthKeysSorted, monthTotals } from './lib/store.jsx';
+import { StoreProvider, useStore, monthKeysSorted, monthTotals, nextMonthKey } from './lib/store.jsx';
 import { maandTitel } from './lib/format.js';
 import Sidebar from './components/Sidebar.jsx';
 import Overview from './components/Overview.jsx';
@@ -37,10 +37,17 @@ function ThemeButtons() {
 }
 
 function AppInner() {
-  const { data, theme } = useStore();
+  const { data, theme, fillRecurring } = useStore();
   const keys = monthKeysSorted(data);
   const [tab, setTab] = useState('overzicht');
   const [monthKey, setMonthKey] = useState(keys[keys.length - 1]);
+
+  function addMonth() {
+    const nk = nextMonthKey(keys[keys.length - 1]);
+    fillRecurring(nk);
+    setMonthKey(nk);
+    setTab('overzicht');
+  }
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -71,6 +78,7 @@ function AppInner() {
                         <option key={k} value={k}>{maandTitel(k)}</option>
                       ))}
                     </select>
+                    <button className="addmonth" onClick={addMonth} title="Volgende maand toevoegen" aria-label="Volgende maand toevoegen">＋</button>
                   </span>
                 </div>
                 <div className="sub">{subtitleFor(totals.over)}</div>
