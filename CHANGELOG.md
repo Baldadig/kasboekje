@@ -3,6 +3,12 @@
 Alle noemenswaardige wijzigingen aan Kasboekje. Nieuwste versie bovenaan.
 Versies volgen semver (vMAJOR.MINOR.PATCH).
 
+## v0.0.5 — Echte data juni/juli/augustus 2026
+- Demo-data vervangen door de echte kasboek-cijfers voor juni, juli en augustus 2026
+- Echte onderwerpen met de Excel-kleurcodering (sparen=blauw, belasting=donkerblauw, stufi=grijs, beleggen=groen…)
+- Opslag-sleutel → v2 zodat de nieuwe data vers laadt
+- Let op: bevat echte persoonlijke cijfers — bewust publiek (eigen keuze, tot er login is)
+
 ## v0.0.4 — Auto-gevulde maanden (fundament-steen 2)
 - **＋-knop** bij de maandkiezer: maakt de volgende maand aan, automatisch gevuld met je terugkerende vaste lasten (met hun vaste bedrag)
 - **"Vul vaste lasten aan"**-knop verschijnt zodra een maand terugkerende onderwerpen mist, en zet ze in één klik terug

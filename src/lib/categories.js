@@ -45,11 +45,11 @@ export function softTint(hex, alpha = 0.16) {
 
 // Lijst met bekende categorieën per type (voor het keuzemenu bij invoer).
 export const KNOWN_INCOME = [
-  'Salaris', 'Freelance', 'Bonus', 'Spaarrente',
+  'Baldadig', 'Mr. Jealousy', 'Partnership', 'Rekening', 'Verzekering', 'Vakantiegeld', 'Boodschappen',
 ];
 export const KNOWN_EXPENSE = [
-  'Huur', 'Boodschappen', 'Uit eten', 'Sportschool', 'Zorgverzekering',
-  'Abonnementen', 'Sparen', 'Beleggen', 'Pensioen', 'Vakantie',
+  'Gezamelijke rek.', 'Zorg', 'Sportschool', 'Pensioen', 'Beleggen', 'Sparen',
+  'Belastingdienst', 'Stufi terug', 'CC terug', 'Amex',
 ];
 
 // Kleurenpalet voor onderwerpen
@@ -61,18 +61,23 @@ export const PALETTE = [
 // Standaard-onderwerpen (categorieën): naam, emoji, kleur, type,
 // vast maandbedrag en of ze elke maand terugkomen (vaste last).
 export const DEFAULT_ONDERWERPEN = [
-  { name: 'Salaris', emoji: '💼', color: '#6d5ef0', type: 'income', amount: 3200, recurring: true },
-  { name: 'Freelance', emoji: '🤝', color: '#1d9e75', type: 'income', amount: 0, recurring: false },
-  { name: 'Bonus', emoji: '🎁', color: '#d4537e', type: 'income', amount: 0, recurring: false },
-  { name: 'Huur', emoji: '🏠', color: '#6d5ef0', type: 'expense', amount: 1250, recurring: true },
-  { name: 'Boodschappen', emoji: '🛒', color: '#7cb342', type: 'expense', amount: 480, recurring: true },
-  { name: 'Sportschool', emoji: '🏋️', color: '#ef9f27', type: 'expense', amount: 35, recurring: true },
-  { name: 'Zorgverzekering', emoji: '🏥', color: '#e24b4a', type: 'expense', amount: 140, recurring: true },
-  { name: 'Abonnementen', emoji: '📺', color: '#8b5cf6', type: 'expense', amount: 45, recurring: true },
-  { name: 'Uit eten', emoji: '🍽️', color: '#ef9f27', type: 'expense', amount: 0, recurring: false },
-  { name: 'Sparen', emoji: '🐷', color: '#4a8bf5', type: 'expense', amount: 400, recurring: true },
-  { name: 'Beleggen', emoji: '📈', color: '#1d9e75', type: 'expense', amount: 200, recurring: true },
-  { name: 'Vakantie', emoji: '🏖️', color: '#ef9f27', type: 'expense', amount: 0, recurring: false },
+  { name: 'Baldadig', emoji: '💼', color: '#6d5ef0', type: 'income', amount: 2000, recurring: true },
+  { name: 'Mr. Jealousy', emoji: '😼', color: '#d4537e', type: 'income', amount: 2000, recurring: true },
+  { name: 'Partnership', emoji: '🤝', color: '#16a89a', type: 'income', amount: 250, recurring: true },
+  { name: 'Rekening', emoji: '🏦', color: '#4a8bf5', type: 'income', amount: 0, recurring: false },
+  { name: 'Verzekering', emoji: '🛡️', color: '#0ea5b7', type: 'income', amount: 0, recurring: false },
+  { name: 'Vakantiegeld', emoji: '🏖️', color: '#ef9f27', type: 'income', amount: 0, recurring: false },
+  { name: 'Boodschappen', emoji: '🛒', color: '#7cb342', type: 'income', amount: 0, recurring: false },
+  { name: 'Gezamelijke rek.', emoji: '🏠', color: '#6d5ef0', type: 'expense', amount: 1750, recurring: true },
+  { name: 'Zorg', emoji: '🏥', color: '#e24b4a', type: 'expense', amount: 150, recurring: true },
+  { name: 'Sportschool', emoji: '🏋️', color: '#ef9f27', type: 'expense', amount: 75, recurring: true },
+  { name: 'Pensioen', emoji: '👴', color: '#4a8bf5', type: 'expense', amount: 100, recurring: true },
+  { name: 'Beleggen', emoji: '📈', color: '#1d9e75', type: 'expense', amount: 150, recurring: true },
+  { name: 'Sparen', emoji: '🐷', color: '#4a8bf5', type: 'expense', amount: 750, recurring: true },
+  { name: 'Belastingdienst', emoji: '🧾', color: '#2c4f9e', type: 'expense', amount: 625, recurring: true },
+  { name: 'Stufi terug', emoji: '🎓', color: '#8a8a8e', type: 'expense', amount: 175, recurring: true },
+  { name: 'CC terug', emoji: '💳', color: '#2c4f9e', type: 'expense', amount: 0, recurring: false },
+  { name: 'Amex', emoji: '💳', color: '#8b5cf6', type: 'expense', amount: 0, recurring: false },
 ];
 
 // Stijl (emoji + kleur) voor een categorie-naam: eerst uit de onderwerpen,

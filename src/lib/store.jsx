@@ -15,7 +15,7 @@ function seedOnderwerpen() {
 // Supabase, zodat je data overal hetzelfde is. De UI hoeft dan niet te wijzigen.
 // ───────────────────────────────────────────────────────────────────────────
 
-const STORAGE_KEY = 'kasboekje_data_v1';
+const STORAGE_KEY = 'kasboekje_data_v2';
 const THEME_KEY = 'kasboekje_theme';
 
 function loadTheme() {
